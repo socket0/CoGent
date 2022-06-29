@@ -3,17 +3,10 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 
 
-query_descriptions = {
-    'Query 01': 'Title',
-    'Query 02': 'Title & maker',
-    'Query 03': 'Manmade objects',
-    'Query 04': 'Manmade objects with title & maker',
-    'Query 05': 'Doesn''t work',
-    'Query 06': 'Title, description & collection',
-    'Query 07': 'Dates'
-}
+query_description = {}
 
-# Title
+##################################################################################################
+query_description['sparql01'] = "Title"
 sparql01 = """
     PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
     SELECT ?title FROM <http://stad.gent/ldes/hva> 
@@ -22,7 +15,8 @@ sparql01 = """
     } LIMIT 1000
 """
 
-# Title & maker
+##################################################################################################
+query_description['sparql02'] = "Title & maker"
 sparql02 = """
     PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
     SELECT ?title  ?maker FROM <http://stad.gent/ldes/dmg> 
@@ -32,7 +26,8 @@ sparql02 = """
     } LIMIT 1000
     """
 
-# Manmade objects
+##################################################################################################
+query_description['sparql02'] = "Manmade objects"
 sparql03 = """
     PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
     PREFIX adms: <http://www.w3.org/ns/adms#>
@@ -48,7 +43,8 @@ sparql03 = """
     LIMIT 1000
 """
 
-# Manmade objects with title & maker
+##################################################################################################
+query_description['sparql04'] = "Manmade objects with title & maker"
 sparql04 = """
     PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
     PREFIX adms: <http://www.w3.org/ns/adms#>
@@ -66,7 +62,8 @@ sparql04 = """
     LIMIT 1000
 """
 
-# 'Doesn''t work
+##################################################################################################
+query_description['sparql05'] = "Association"
 sparql05 = """
     PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -81,7 +78,8 @@ sparql05 = """
     } LIMIT 10000
 """
 
-# Title, description & collection
+##################################################################################################
+query_description['sparql06'] = "Title, description & collection"
 sparql06 = """
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -103,7 +101,8 @@ sparql06 = """
     } 
     """
 
-# Dates
+##################################################################################################
+query_description['sparql07'] = "Dates"
 sparql07 = """
     PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -113,6 +112,39 @@ sparql07 = """
       ?start cidoc:P102_has_title ?title.
       ?start cidoc:P108i_was_produced_by ?maker.
       ?maker cidoc:P4_has_time-span ?date.
+    } LIMIT 50000
+    """
+
+##################################################################################################
+query_description['sparql08'] = "Object type and title"
+sparql08 = """
+    PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    
+    SELECT ?title ?tag FROM <http://stad.gent/ldes/hva>
+    WHERE { 
+      ?start cidoc:P102_has_title ?title.
+      ?start cidoc:P41i_was_classified_by ?object.
+      ?object cidoc:P42_assigned ?is.
+      ?is skos:prefLabel ?tag.
+    } LIMIT 50000
+    """
+
+##################################################################################################
+query_description['sparql09'] = "Object manufacturer"
+sparql09 = """
+    PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX la: <https://linked.art/ns/terms/>
+    
+    SELECT ?title ?manufacturer FROM <http://stad.gent/ldes/hva>
+    WHERE { 
+      ?start cidoc:P102_has_title ?title.
+      ?start cidoc:P108i_was_produced_by ?m.
+      ?m cidoc:P14_carried_out_by ?vervaardiger.
+      ?vervaardiger la:equivalent ?v.
+      ?v rdfs:label ?manufacturer
     } LIMIT 50000
     """
 
@@ -139,11 +171,13 @@ def parse_results(results):
         print_results(r, 'title')
         print_results(r, 'description')
         print_results(r, 'maker')
+        print_results(r, 'manufacturer')
         print_results(r, 'date')
         print_results(r, 'collection')
         print_results(r, 'id')
         print_results(r, 'identificator')
         print_results(r, 'association')
+        print_results(r, 'tag')
         print('│')
         print('│')
     print('\n\nRESULTS: ', len(results))
@@ -158,8 +192,8 @@ if __name__ == '__main__':
 
     print('┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓')
     print('┃')
-    for query in query_descriptions:
-        print('┃', query, ': ', query_descriptions[query])
+    for query in query_description:
+        print('┃', query, ': ', query_description[query])
     print('┃')
     print('┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛')
 
