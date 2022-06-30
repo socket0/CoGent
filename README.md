@@ -30,18 +30,18 @@ https://datalab.stad.gent/coghent
 SPARQL demo  
 https://github.com/CoGhent/sparql_party
 
-Het collectiebeheersysteem (Adlib CMS) van het Design Museum Gent, STAM, Industriemuseum, Huis van Alijn en Archief Gent werd uitgebreid met de Linked Data Event Stream specificatie.
-
-De adlib2eventstream API stelt Adlib databases bloot als event streams. Een event stream is een verzameling van objecten met versiebeheer (in deze context is versie zoals een eventstream event) en kan op elk moment worden bijgewerkt in hun eigen tempo (trage & snelle data). Op deze manier kunnen consumenten gemakkelijk de laatste wijzigingen ontdekken en gebruiken.
-
-Bekijk de OpenAPI specificatie voor de adlib2eventstream API. De adlib2eventstream is opgebouwd uit open source componenten:
-
-* Adlib backend: Eerst wordt een Adlib-database opgehaald en wordt de data gemapt naar Linked Data in JSON-LD formaat waarna het wordt opgeslagen in een database.
-* Eventstream API: Hierna worden de Linked Data Fragmenten ontsloten vanuit deze database volgens de Evenstream specificatie.
-
-**Voorbeeld query:**
-
-https://apidg.gent.be/opendata/adlib2eventstream/v1/industriemuseum/objecten?generatedAtTime=2022-06-02T00:00:43.528Z
+> Het collectiebeheersysteem (Adlib CMS) van het Design Museum Gent, STAM, Industriemuseum, Huis van Alijn en Archief Gent werd uitgebreid met de Linked Data Event Stream specificatie.
+> 
+> De adlib2eventstream API stelt Adlib databases bloot als event streams. Een event stream is een verzameling van objecten met versiebeheer (in deze context is versie zoals een eventstream event) en kan op elk moment worden bijgewerkt in hun eigen tempo (trage & snelle data). Op deze manier kunnen consumenten gemakkelijk de laatste wijzigingen ontdekken en gebruiken.
+> 
+> Bekijk de OpenAPI specificatie voor de adlib2eventstream API. De adlib2eventstream is opgebouwd uit open source componenten:
+> 
+> * Adlib backend: Eerst wordt een Adlib-database opgehaald en wordt de data gemapt naar Linked Data in JSON-LD formaat waarna het wordt opgeslagen in een database.
+> * Eventstream API: Hierna worden de Linked Data Fragmenten ontsloten vanuit deze database volgens de Evenstream specificatie.
+> 
+> **Voorbeeld query:**
+> 
+> https://apidg.gent.be/opendata/adlib2eventstream/v1/industriemuseum/objecten?generatedAtTime=2022-06-02T00:00:43.528Z
 
 ---
 
